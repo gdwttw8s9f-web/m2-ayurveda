@@ -191,6 +191,7 @@
   .pwa-panel.open { display: block; }
   .pwa-panel h3 { margin: 0 0 8px; color: #0E7490; font-size: 1rem; }
   .pwa-panel .mini { color: #666; font-size: .82rem; margin: 4px 0 10px; }
+  .pwa-list { display:block; }
   .pwa-list button { display: block; width: 100%; text-align: left; padding: 11px 12px; margin: 7px 0; border-radius: 10px; border: 1px solid #E2EAF0; background: #F7FAFC; color: #15233B; font-weight: 650; }
   .favorite-star { margin-left: 6px; border: 0; background: transparent; color: #D97706; font-size: 1.1rem; padding: 4px 6px; }
   .flashcard.fav .card-head { background: linear-gradient(90deg,#FEF3C7,transparent); }
@@ -8370,13 +8371,37 @@ insuffisance cardiaque).</div>
       </div>`;
     document.body.appendChild(ui);
     const navList = document.getElementById("navList");
-    document.querySelectorAll(".toc-item:not(.soon)").forEach(a => {
-      const label = a.querySelector(".toc-label")?.textContent?.trim() || a.textContent.trim();
-      const href = a.getAttribute("href");
-      const b = document.createElement("button"); b.type = "button"; b.textContent = label;
-      b.onclick = () => { closePanels(); const target = href ? document.querySelector(href) : null; if (target) target.scrollIntoView({behavior:"smooth", block:"start"}); };
+    function addThemeButton(label, targetId){
+      if (!navList || !label || !targetId) return;
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = label;
+      b.addEventListener("click", function(){
+        closePanels();
+        const target = document.getElementById(targetId.replace(/^#/, ""));
+        if (target) target.scrollIntoView({behavior:"smooth", block:"start"});
+      });
       navList.appendChild(b);
-    });
+    }
+    // Version robuste iPhone : priorité aux sections réelles du document.
+    // L'ancien menu se basait sur les liens du sommaire, parfois mal initialisés en mode PWA iOS.
+    if (navList){
+      navList.innerHTML = "";
+      document.querySelectorAll("section.category-section[id]").forEach(section => {
+        const h2 = section.querySelector("h2");
+        const label = h2 ? h2.textContent.replace(/\s+/g," ").trim() : section.id.replace(/^cat-/,"");
+        addThemeButton(label, section.id);
+      });
+      // Fallback si le document utilise des div au lieu de section.
+      if (!navList.children.length){
+        document.querySelectorAll(".category-section[id]").forEach(section => {
+          const h2 = section.querySelector("h2");
+          const label = h2 ? h2.textContent.replace(/\s+/g," ").trim() : section.id.replace(/^cat-/,"");
+          addThemeButton(label, section.id);
+        });
+      }
+      if (!navList.children.length) navList.innerHTML = "<div class='mini'>Aucun thème détecté. Recharge la page ou vide le cache Safari.</div>";
+    }
     document.getElementById("navBtn").onclick = () => openPanel("nav");
     document.getElementById("favBtn").onclick = () => { buildFavorites(); openPanel("fav"); };
     document.getElementById("helpBtn").onclick = () => openPanel("help");
