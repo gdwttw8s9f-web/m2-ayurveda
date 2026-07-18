@@ -8680,7 +8680,7 @@ insuffisance cardiaque).</div>
     });
   }
   function addUI(){
-    if (document.getElementById("mobileStudyUI")) return;
+    { const _ex = document.getElementById("mobileStudyUI"); if (_ex) _ex.remove(); }
     const note = document.createElement("div");
     note.className = "install-note";
     note.innerHTML = "<strong>iPhone :</strong> pour l'installer sur l'écran d'accueil, publie ce fichier sur GitHub Pages puis ouvre l'adresse dans Safari → Partage → Ajouter à l'écran d'accueil.";
@@ -8915,14 +8915,13 @@ insuffisance cardiaque).</div>
 })();
 </script>
 
-
 <div id="mobileStudyUI">
       <div id="progressPill" class="progress-pill">0/394 vues</div>
-      <div id="navPanel" class="pwa-panel"><h3>Thèmes</h3><div class="mini">Accès rapide aux sections.</div><div id="navList" class="pwa-list"><button type="button">Cardiologie</button><button type="button">Dermatologie</button><button type="button">Examens complémentaires</button><button type="button">Gastro-entérologie</button><button type="button">Gynécologie</button><button type="button">Hématologie</button><button type="button">Infectiologie</button><button type="button">Myopathies</button><button type="button">Néphropathologie</button><button type="button">Neurologie</button><button type="button">Oncologie</button><button type="button">Ophtalmologie</button><button type="button">ORL</button><button type="button">Pathologies Endocriniennes</button><button type="button">Pathologies Génétiques</button><button type="button">Pédiatrie</button><button type="button">ECOS — Examen clinique</button><button type="button">Pharmacologie</button><button type="button">Pneumologie</button><button type="button">Psychologie &amp; Psychiatrie</button><button type="button">Rhumatologie</button><button type="button">Traumatologie</button><button type="button">Troubles Hépatiques &amp; Biliaires</button></div></div>
+      <div id="navPanel" class="pwa-panel"><h3>Thèmes</h3><div class="mini">Accès rapide aux sections.</div><div id="navList" class="pwa-list"><button type="button">Raisonnement clinique transversal</button><button type="button">Cardiologie</button><button type="button">Dermatologie</button><button type="button">Examens complémentaires</button><button type="button">Gastro-entérologie</button><button type="button">Gynécologie</button><button type="button">Hématologie</button><button type="button">Infectiologie</button><button type="button">Myopathies</button><button type="button">Néphropathologie</button><button type="button">Neurologie</button><button type="button">Oncologie</button><button type="button">Ophtalmologie</button><button type="button">ORL</button><button type="button">Pathologies Endocriniennes</button><button type="button">Pathologies Génétiques</button><button type="button">Pédiatrie</button><button type="button">ECOS — Examen clinique</button><button type="button">Pharmacologie</button><button type="button">Pneumologie</button><button type="button">Psychologie &amp; Psychiatrie</button><button type="button">Rhumatologie</button><button type="button">Traumatologie</button><button type="button">Troubles Hépatiques &amp; Biliaires</button></div></div>
       <div id="favPanel" class="pwa-panel"><h3>Favoris</h3><div class="mini">Fiches marquées avec ★.</div><div id="favList" class="pwa-list"><div class="mini">Aucun favori. Touche ☆ sur une fiche.</div></div></div>
       <div id="helpPanel" class="pwa-panel"><h3>Installation iPhone</h3><div class="mini">Depuis GitHub Pages : ouvre l'URL dans Safari, touche Partage, puis Ajouter à l'écran d'accueil.</div></div>
       <div class="mobile-tabbar">
-        <button id="navBtn" type="button">Thèmes</button>
+        <button id="navBtn" type="button" class="">Thèmes</button>
         <button id="favBtn" type="button">Favoris</button>
         <button id="lastBtn" type="button">Dernière</button>
         <button id="helpBtn" type="button">Aide</button>
